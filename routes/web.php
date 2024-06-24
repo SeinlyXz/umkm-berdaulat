@@ -6,7 +6,6 @@ use App\Http\Controllers\ProductController;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 Route::redirect("/", "/login");
 
 Route::group(['middleware' => 'guest'], function () {

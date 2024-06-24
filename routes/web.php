@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -28,9 +29,4 @@ Route::group(['middleware' => 'auth'], function () {
     
 });
 
-Route::get('/hello', function(){
-    $users = User::all();
-    return view('hello', [
-        'users' => $users
-    ]);
-})->middleware("auth")->name('hello');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');

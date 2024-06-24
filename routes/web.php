@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ProductController;
 
 Route::redirect("/", "/login");
 
@@ -29,15 +29,4 @@ Route::group(['middleware' => 'auth'], function () {
     
 });
 
-Route::get('/hello', function(){
-    $users = User::all();
-    return view('hello', [
-        'users' => $users
-    ]);
-})->middleware("auth")->name('hello');
-
-Route::get('/product',[ProductController::class, 'index']);
-
-Route::get('/product/create',[ProductController::class, 'create']);
-
-Route::post('/product',[ProductController::class, 'store'])->name('product.store');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');

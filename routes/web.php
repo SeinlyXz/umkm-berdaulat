@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ProductController;
 
 Route::redirect("/", "/login");
 
@@ -34,3 +35,5 @@ Route::get('/hello', function(){
         'users' => $users
     ]);
 })->middleware("auth")->name('hello');
+
+Route::get('/product',[ProductController::class, 'index']);

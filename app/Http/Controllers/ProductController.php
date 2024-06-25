@@ -12,4 +12,14 @@ class ProductController extends Controller
         $products = Product::all();
         return view('product.index', compact('products'));
     }
+
+    public function store(Request $request)
+    {
+        $product = new Product();
+        $product->nama = $request->nama;
+        $product->harga = $request->harga;
+        $product->save();
+
+        return redirect()->route('product.index');
+    }
 }

@@ -57,7 +57,7 @@
     <div class="container p-5">
         <p class="text-[#C58940] ms-12 font-bold text-2xl">Rekomendasi untuk Anda</p>
         <div class="p-10">
-            <div class="flex gap-5 justify-between">
+            <div class="grid grid-cols-4 gap-5 justify-between">
                 @foreach ($products as $product)
                 <div class="relative rounded-xl overflow-hidden">
                     <img src="Rectangle 17.png" alt="" class="object-cover w-64 h-96">

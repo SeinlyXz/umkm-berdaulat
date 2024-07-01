@@ -10,11 +10,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+
+        $products = Product::with('categories')->get();
+        // dd($products->toArray());
         $categories = Categories::all();
-        return view('product.index', compact([
-            'products' => $products, 'categories' => $categories 
-        ]));
+        return view('product.index', [
+            'products' => $products, 'categories' => $categories
+        ]);
     }
 
     public function store(Request $request)
@@ -24,6 +26,7 @@ class ProductController extends Controller
         $product->nama = $request->input('nama');
         $product->harga = $request->input('harga');
         $product->rating = 5;
+        $product->categories_id = $request->input('categories_id');
         $product->save();
 
         return redirect('/product');
@@ -31,6 +34,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('product.create');
+        $categories = Categories::all();
+        return view('product.create', compact('categories'));
     }
 }

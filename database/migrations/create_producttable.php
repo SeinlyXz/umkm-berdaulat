@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->integer('rating');
+            $table->integer('categories_id')->default(1);
             $table->timestamps();
         });
     }

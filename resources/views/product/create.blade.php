@@ -8,15 +8,24 @@
                 <h1 class="flex justify-center font-bold text-xl m-3">Tambah Produk</h1>
                 @csrf
                 <div class="py-2">
-                    <label for="name" class="">Nama: </label> <br>
-                    <input type="text" name="nama" id="name" class="border border-black rounded mt-3 w-72 px-3 py-2" placeholder="Contoh: Sabun Tukang " required>
+                    <label for="name" class="text-sm font-medium">Nama: </label> <br>
+                    <input type="text" name="nama" id="name" class="border border-black rounded mt-3 w-72 px-3 py-2 bg-[#F0E5BD] text-sm font-medium" placeholder="Contoh: Sabun Tukang " required>
                 </div>
                 <div class="py-2">
-                    <label for="price">Harga: </label> <br>
-                    <input type="text" name="harga" id="price" class="border border-black rounded mt-3 w-72 px-3 py-2" placeholder="Contoh: Rp. 20.000" required>
+                    <label for="price" class="text-sm font-medium">Harga: </label> <br>
+                    <input type="text" name="harga" id="price" class="border border-black rounded mt-3 w-72 px-3 py-2 bg-[#F0E5BD] text-sm font-medium" placeholder="Contoh: Rp. 20.000" required>
+                </div>
+                <div class="py-2">
+                    <label for="kategori" class="block mb-2 text-sm font-medium">Pilih Kategori</label>
+                    <select id="kategori" name="categories_id" class="bg-[#F0E5BD] border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                      <option selected>Pilih Kategori</option>
+                      @foreach ($categories as $category)   
+                        <option value="{{$category->id}}">{{$category->nama}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="justify-center flex mt-3 ">
-                    <button type="submit" class="text-black px-3 py-2 rounded bg-[#E5BA73]">Tambah</button>
+                    <button type="submit" class="text-black px-3 py-2 rounded bg-[#E5BA73] font-bold">Tambah</button>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">

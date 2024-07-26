@@ -56,7 +56,7 @@ class AuthController extends Controller
 
         if (auth()->attempt($creds)) {
             RateLimiter::clear($key); // Reset rate limiter on successful login
-            return redirect('/home')->with('success', 'Login successful');
+            return redirect('/')->with('success', 'Login successful');
         } else {
             return back()->with('error', 'Invalid login credentials');
         }

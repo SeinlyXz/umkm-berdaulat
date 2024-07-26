@@ -1,3 +1,4 @@
+@import '@splidejs/splide/dist/css/splide.min.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

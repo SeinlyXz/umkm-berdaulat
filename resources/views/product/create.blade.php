@@ -1,50 +1,87 @@
-@extends('layouts.guest')
+@extends('layouts.app')
 
-@section('content') 
-<div class="h-screen items-center justify-center flex">
-    <form action="{{route('product.store')}}" method="POST" class="">
-        <div class="flex p-5 shadow-2xl bg-[#FAEAB1] rounded-xl gap-10">
-            <div class="">
-                <h1 class="flex justify-center font-bold text-xl m-3">Tambah Produk</h1>
-                @csrf
-                <div class="py-2">
-                    <label for="name" class="">Nama: </label> <br>
-                    <input type="text" name="nama" id="name" class="border border-black rounded mt-3 w-72 px-3 py-2" placeholder="Contoh: Sabun Tukang " required>
-                </div>
-                <div class="py-2">
-                    <label for="price">Harga: </label> <br>
-                    <input type="text" name="harga" id="price" class="border border-black rounded mt-3 w-72 px-3 py-2" placeholder="Contoh: Rp. 20.000" required>
-                </div>
-                <div class="justify-center flex mt-3 ">
-                    <button type="submit" class="text-black px-3 py-2 rounded bg-[#E5BA73]">Tambah</button>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center justify-center w-full">
-                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-[#F0E5BD]">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                            </svg>
-                            <p class="mb-2 text-xs text-gray-500 dark:text-gray-400"><span class="m-3 font-semibold">Tambah Gambar Produk #1</span></p>
-                        </div>
-                        <input id="dropzone-file" type="file" class="hidden" />
-                    </label>
-                </div> 
-                <div class="flex items-center justify-center w-full">
-                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-[#F0E5BD]">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                            </svg>
-                            <p class="mb-2 text-xs text-gray-500 dark:text-gray-400 "><span class="m-3 font-semibold">Tambah Gambar Produk #2</span></p>
-                            
-                        </div>
-                        <input id="dropzone-file" type="file" class="hidden" />
-                    </label>
-                </div>
-            </div>
+@section('content')
+<div class="flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 mt-7 rounded-xl">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Tambah Produk Baru
+            </h2>
+            @if(session('error'))
+                <small>{{ session('error') }}</small>
+            @endif
         </div>
-    </form>
+        <form class="mt-8 space-y-6" action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="name" class="sr-only">Nama Produk</label>
+                    <input id="name" name="nama" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Nama Produk">
+                </div>
+                <div>
+                    <label for="price" class="sr-only">Harga</label>
+                    <input id="price" name="harga" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Harga (contoh: Rp. 20.000)">
+                </div>
+                <div>
+                    <label for="category" class="sr-only">Kategori</label>
+                    <select id="category" name="category_id" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($categories as $category)
+                        <option value="{{$category->id}}">{{$category->nama}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="stock" class="sr-only">Stok</label>
+                    <input id="stock" name="qty" type="number" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Jumlah Stok">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="foto1" class="block text-sm font-medium text-gray-700">
+                        Foto Produk #1
+                    </label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-gray-600">
+                                <label for="foto1" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                    <span>Upload a file</span>
+                                    <input id="foto1" name="foto1" type="file" class="sr-only" required>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="foto2" class="block text-sm font-medium text-gray-700">
+                        Foto Produk #2 (Opsional)
+                    </label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-gray-600">
+                                <label for="foto2" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                    <span>Upload a file</span>
+                                    <input id="foto2" name="foto2" type="file" class="sr-only">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Tambah Produk
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

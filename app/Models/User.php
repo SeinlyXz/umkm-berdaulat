@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -20,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'toko_id'
     ];
 
     /**
@@ -43,5 +46,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    // public function toko(): HasOne{
+    //     return $this->hasOne(Tokos::class, 'user_id', 'id');
+    // }
+    public function toko(): BelongsTo
+    {
+        return $this->belongsTo(Tokos::class);
+    }
+
+    public function keranjang(): HasMany
+    {
+        return $this->hasMany(Keranjang::class);
     }
 }

@@ -14,7 +14,7 @@
                 </div>
             @endif
             <h1 class="text-2xl">
-                Login Dulu Bang
+                Selamat Datang
             </h1>
             <form action="{{ route('login.post') }}" method="POST">
                 @csrf

@@ -1,15 +1,16 @@
-@extends("layouts.app")
-@section("title","Home")
-@section("content")
-    <div class="flex justify-center items-center h-screen">
-        <div class="flex flex-col gap-y-5">
-            <h1 class="text-3xl text-gray-500">
-                Selamat Datang! {{$user->name}}
-                {{ $search }}
-            </h1>
-            <a href="{{ route('logout') }}" class="text-white bg-slate-500 hover:bg-slate-400 text-center rounded-xl px-3 py-2 w-full mt-5">
-                Logout
-            </a>
+@extends('layouts.app')
+@section('title', 'Home')
+@section('content')
+    <div class="pt-5 pb-10 flex flex-col gap-y-5">
+        <x-home-carousel />
+        <x-home-category />
+        <h1 class="text-3xl font-semibold">
+            Produk Terbaru
+        </h1>
+        <div class="grid md:grid-cols-5 grid-cols-2 gap-4">
+          @foreach($products as $product) 
+            <x-product-card :toko="$product->toko" :name="$product->nama" :harga="$product->harga" :rating="$product->rating" :productid="$product->id" :gambar="$product->gambar" />
+          @endforeach
         </div>
     </div>
 @endsection
